@@ -50,11 +50,11 @@ public class Employee {
 
 
     public void setValueOldCache(String propertyName, Object propertyValue) {
-        methodCache.invokeSetter(this, propertyName, propertyValue);
+        methodCache.setValue(propertyName, propertyValue, this);
     }
 
     public Object getValueOldCache(String propertyName) {
-        return methodCache.invokeGetter(this, propertyName);
+        return methodCache.getValue(propertyName, this);
     }
 
 
