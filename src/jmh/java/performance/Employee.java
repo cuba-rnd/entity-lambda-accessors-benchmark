@@ -8,37 +8,34 @@ import java.util.UUID;
 
 public class Employee {
 
-        private static MethodsCache methodCache;
-        private static LambdaMethodsCache lambdaMethodsCache;
-        private static MethodHandleCache methodHandleCache;
+    private static final MethodsCache methodCache;
+    private static final LambdaMethodsCache lambdaMethodsCache;
+    private static final MethodHandleCache methodHandleCache;
 
-        private UUID id;
-        private String name;
-        private final Class cls = getClass();
+    static {
+        methodCache = new MethodsCache(Employee.class);
+        methodHandleCache = new MethodHandleCache(Employee.class);
+        lambdaMethodsCache = new LambdaMethodsCache(Employee.class);
+    }
 
+    private UUID id;
+    private String name;
 
-        public Employee() {
-            methodCache = new MethodsCache(cls);
-            methodHandleCache = new MethodHandleCache(cls);
-            lambdaMethodsCache = new LambdaMethodsCache(cls);
-        }
+    public String getName() {
+        return name;
+    }
 
+    public void setName(String name) {
+        this.name = name;
+    }
 
-        public String getName() {
-            return name;
-        }
+    public UUID getId() {
+        return id;
+    }
 
-        public void setName(String name) {
-            this.name = name;
-        }
-
-        public UUID getId() {
-            return id;
-        }
-
-        public void setId(UUID id) {
-            this.id = id;
-        }
+    public void setId(UUID id) {
+        this.id = id;
+    }
 
     public void setValue(String propertyName, Object propertyValue) {
         setValueNative(propertyName, propertyValue);
@@ -48,16 +45,16 @@ public class Employee {
         return getValueNative(propertyName);
     }
 
-
-    public void setValueOldCache(String propertyName, Object propertyValue) {
+    //Classic reflection method access
+    public void setValueReflectionCache(String propertyName, Object propertyValue) {
         methodCache.setValue(propertyName, propertyValue, this);
     }
 
-    public Object getValueOldCache(String propertyName) {
+    public Object getValueReflectionCache(String propertyName) {
         return methodCache.getValue(propertyName, this);
     }
 
-
+    //LambdaMetafactory based method access
     public void setValueLambdaCache(String propertyName, Object propertyValue) {
         lambdaMethodsCache.setValue(propertyName, propertyValue, this);
     }
@@ -66,15 +63,16 @@ public class Employee {
         return lambdaMethodsCache.getValue(propertyName, this);
     }
 
+    //MethodHandle method access
     public void setValueMethodHandleCache(String propertyName, Object propertyValue) {
-            methodHandleCache.setValue(propertyName, propertyValue, this);
+        methodHandleCache.setValue(propertyName, propertyValue, this);
     }
 
     public Object getValueMethodHandleCache(String propertyName) {
         return methodHandleCache.getValue(propertyName, this);
     }
 
-
+    //"Native" method access
     public void setValueNative(String propertyName, Object propertyValue) {
         switch (propertyName) {
             case "name":

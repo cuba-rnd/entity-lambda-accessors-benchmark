@@ -15,11 +15,13 @@ public class MethodsCache extends AbstractMethodsCache<Method, Method> {
 
     @Override
     protected Method createGetter(Class clazz, Method method) {
+        method.setAccessible(true);
         return method;
     }
 
     @Override
     protected Method createSetter(Class clazz, Method method) {
+        method.setAccessible(true);
         return method;
     }
 

@@ -18,10 +18,10 @@ import java.util.concurrent.TimeUnit;
 @State(Scope.Thread)
 @OutputTimeUnit(TimeUnit.MICROSECONDS)
 @Fork(2)
-
 public class PerformanceTest {
 
     Employee user;
+
     UUID uuid;
 
     @Setup(Level.Trial)
@@ -51,16 +51,16 @@ public class PerformanceTest {
     @BenchmarkMode({Mode.Throughput, Mode.AverageTime})
     @Warmup(iterations = 5, time = 1000, timeUnit = TimeUnit.MILLISECONDS)
     @Measurement(iterations = 10, time = 1000, timeUnit = TimeUnit.MILLISECONDS)
-    public void oldCacheSetTest(){
-        user.setValueOldCache("name", "someName");
+    public void reflectionCacheSetTest(){
+        user.setValueReflectionCache("name", "someName");
     }
 
     @Benchmark
     @BenchmarkMode({Mode.Throughput, Mode.AverageTime})
     @Warmup(iterations = 5, time = 1000, timeUnit = TimeUnit.MILLISECONDS)
     @Measurement(iterations = 10, time = 1000, timeUnit = TimeUnit.MILLISECONDS)
-    public Object oldCacheGetTest(){
-        return user.getValueOldCache("name");
+    public Object reflectionCacheGetTest(){
+        return user.getValueReflectionCache("name");
     }
 
     @Benchmark
@@ -119,16 +119,16 @@ public class PerformanceTest {
     @BenchmarkMode({Mode.Throughput, Mode.AverageTime})
     @Warmup(iterations = 5, time = 1000, timeUnit = TimeUnit.MILLISECONDS)
     @Measurement(iterations = 10, time = 1000, timeUnit = TimeUnit.MILLISECONDS)
-    public void oldCacheSetID(){
-        user.setValueOldCache("id", uuid);
+    public void reflectionCacheSetID(){
+        user.setValueReflectionCache("id", uuid);
     }
 
     @Benchmark
     @BenchmarkMode({Mode.Throughput, Mode.AverageTime})
     @Warmup(iterations = 5, time = 1000, timeUnit = TimeUnit.MILLISECONDS)
     @Measurement(iterations = 10, time = 1000, timeUnit = TimeUnit.MILLISECONDS)
-    public Object oldCacheGetID(){
-        return user.getValueOldCache("id");
+    public Object reflectionCacheGetID(){
+        return user.getValueReflectionCache("id");
     }
 
     @Benchmark
