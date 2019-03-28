@@ -37,7 +37,7 @@ dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
 }
 
-def reportFile = new File("$buildDir/reports/jmh/result.txt").toPath()
+def reportFile = new File("$buildDir/reports/jmh/result.json").toPath()
 
 
 task recreateReportFile { //Touch from JMH framework fails on Windows
@@ -55,5 +55,5 @@ task jmh(type: JavaExec, description: 'Executing JMH benchmarks', dependsOn: 're
     classpath = sourceSets.jmh.runtimeClasspath
     main = 'org.openjdk.jmh.Main'
 
-    args '-rff', reportFile.toFile()
+    args '-rff', reportFile.toFile(), '-rf', 'json'
 }
