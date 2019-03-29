@@ -8,14 +8,15 @@ import java.util.UUID;
 
 public class Employee {
 
-    private static final MethodsCache methodCache;
-    private static final LambdaMethodsCache lambdaMethodsCache;
-    private static final MethodHandleCache methodHandleCache;
+    private final MethodsCache methodCache;
+    private final LambdaMethodsCache lambdaMethodsCache;
+    private final MethodHandleCache methodHandleCache;
 
-    static {
-        methodCache = new MethodsCache(Employee.class);
-        methodHandleCache = new MethodHandleCache(Employee.class);
-        lambdaMethodsCache = new LambdaMethodsCache(Employee.class);
+    public Employee() {
+        final Class<? extends Employee> clazz = getClass();
+        methodCache = new MethodsCache(clazz);
+        methodHandleCache = new MethodHandleCache(clazz);
+        lambdaMethodsCache = new LambdaMethodsCache(clazz);
     }
 
     private UUID id;

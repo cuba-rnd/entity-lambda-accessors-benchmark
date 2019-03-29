@@ -46,7 +46,7 @@ public class LambdaMethodsCache extends AbstractMethodsCache<Function, BiConsume
                     MethodType.methodType(BiConsumer.class),
                     MethodType.methodType(void.class, Object.class, Object.class),
                     caller.findVirtual(clazz, method.getName(), MethodType.methodType(method.getReturnType(), method.getParameterTypes()[0])),
-                    MethodType.methodType(void.class, clazz, method.getParameterTypes()[0]));
+                    MethodType.methodType(method.getReturnType(), clazz, method.getParameterTypes()[0]));
             MethodHandle factory = site.getTarget();
             setter = (BiConsumer) factory.invoke();
         } catch (Throwable t) {
